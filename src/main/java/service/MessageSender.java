@@ -1,18 +1,23 @@
 package service;
 
-import bot.JBotLib;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.*;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 @Slf4j
-public class MessageSender extends JBotLib {
+public class MessageSender {
+    private final TelegramLongPollingBot bot;
+
+    public MessageSender(TelegramLongPollingBot bot) {
+        this.bot = bot;
+    }
 
     @SneakyThrows
     public void sendMessage(Long chatId, String message) {
-        execute(SendMessage.builder()
+        bot.execute(SendMessage.builder()
                 .chatId(chatId)
                 .text(message)
                 .parseMode("MarkdownV2")
@@ -22,18 +27,18 @@ public class MessageSender extends JBotLib {
 
     @SneakyThrows
     public void sendMessage(Long chatId, String message, ReplyKeyboard replyKeyboard) {
-        execute(SendMessage.builder()
+        bot.execute(SendMessage.builder()
                 .chatId(chatId)
                 .text(message)
                 .parseMode("MarkdownV2")
                 .replyMarkup(replyKeyboard)
                 .build());
-        log.info("Sending  a keyboard message to {}", chatId);
+        log.info("Sending a keyboard message to {}", chatId);
     }
 
     @SneakyThrows
     public void sendPhoto(Long chatId, String caption, InputFile photo) {
-        execute(SendPhoto.builder()
+        bot.execute(SendPhoto.builder()
                 .chatId(chatId)
                 .caption(caption)
                 .parseMode("MarkdownV2")
@@ -44,19 +49,19 @@ public class MessageSender extends JBotLib {
 
     @SneakyThrows
     public void sendPhoto(Long chatId, String caption, InputFile photo, ReplyKeyboard replyKeyboard) {
-        execute(SendPhoto.builder()
+        bot.execute(SendPhoto.builder()
                 .chatId(chatId)
                 .caption(caption)
                 .parseMode("MarkdownV2")
                 .photo(photo)
                 .replyMarkup(replyKeyboard)
                 .build());
-        log.info("Sending a keyobard photo to {}", chatId);
+        log.info("Sending a keyboard photo to {}", chatId);
     }
 
     @SneakyThrows
     public void sendDocument(Long chatId, String caption, InputFile document) {
-        execute(SendDocument.builder()
+        bot.execute(SendDocument.builder()
                 .chatId(chatId)
                 .document(document)
                 .parseMode("MarkdownV2")
@@ -67,7 +72,7 @@ public class MessageSender extends JBotLib {
 
     @SneakyThrows
     public void sendDocument(Long chatId, String caption, InputFile document, ReplyKeyboard replyKeyboard) {
-        execute(SendDocument.builder()
+        bot.execute(SendDocument.builder()
                 .chatId(chatId)
                 .document(document)
                 .parseMode("MarkdownV2")
@@ -79,7 +84,7 @@ public class MessageSender extends JBotLib {
 
     @SneakyThrows
     public void sendVideo(Long chatId, String caption, InputFile video) {
-        execute(SendVideo.builder()
+        bot.execute(SendVideo.builder()
                 .chatId(chatId)
                 .caption(caption)
                 .parseMode("MarkdownV2")
@@ -90,7 +95,7 @@ public class MessageSender extends JBotLib {
 
     @SneakyThrows
     public void sendVideo(Long chatId, String caption, InputFile video, ReplyKeyboard replyKeyboard) {
-        execute(SendVideo.builder()
+        bot.execute(SendVideo.builder()
                 .chatId(chatId)
                 .caption(caption)
                 .parseMode("MarkdownV2")

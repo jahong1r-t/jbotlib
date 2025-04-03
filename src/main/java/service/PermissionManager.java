@@ -1,23 +1,28 @@
 package service;
 
 
-import bot.JBotLib;
 import exceptions.InvalidChannelLinkException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember;
 import org.telegram.telegrambots.meta.api.objects.chatmember.ChatMember;
 
 import java.util.List;
 
 @Slf4j
-public class PermissionManager extends JBotLib {
+public class PermissionManager {
+    private final TelegramLongPollingBot bot;
+
+    public PermissionManager(TelegramLongPollingBot bot) {
+        this.bot = bot;
+    }
 
     @SneakyThrows
     public boolean isJoinedChannel(Long userId, List<String> channels) {
         for (String channel : channels) {
             if (channel.startsWith("@")) {
-                ChatMember execute = execute(GetChatMember.builder()
+                ChatMember execute = bot.execute(GetChatMember.builder()
                         .chatId(channel)
                         .userId(userId)
                         .build());
@@ -26,7 +31,7 @@ public class PermissionManager extends JBotLib {
                     return true;
                 }
             } else if (channel.matches("https?://t.me/.+")) {
-                ChatMember execute = execute(GetChatMember.builder()
+                ChatMember execute = bot.execute(GetChatMember.builder()
                         .chatId(channel)
                         .userId(userId)
                         .build());
@@ -41,4 +46,5 @@ public class PermissionManager extends JBotLib {
         }
         return false;
     }
+
 }
