@@ -1,17 +1,22 @@
 package bot;
 
+import lombok.Getter;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import service.*;
 
-public class JBotLib extends TelegramLongPollingBot {
+@Getter
+public abstract class JBotLib extends TelegramLongPollingBot {
+    private final MessageSender messageSender;
+    private final ButtonBuilder buttonBuilder;
+    private final ChatContentService chatContentService;
+    private final MessageUpdater messageUpdater;
+    private final PermissionManager permissionManager;
 
-    @Override
-    public void onUpdateReceived(Update update) {
-
-    }
-
-    @Override
-    public String getBotUsername() {
-        return "";
+    private JBotLib() {
+        this.buttonBuilder = new ButtonBuilder(this);
+        this.chatContentService = new ChatContentService(this);
+        this.messageUpdater = new MessageUpdater(this);
+        this.permissionManager = new PermissionManager(this);
+        this.messageSender = new MessageSender(this);
     }
 }
