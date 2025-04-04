@@ -5,19 +5,23 @@ import lombok.SneakyThrows;
 
 public class Resolvers {
     @SneakyThrows
-    public static String linkResolver(String raw) {
-        if (raw == null || raw.isBlank()) {
+    public static String linkResolver(String link) {
+        if (link == null || link.isBlank()) {
             throw new InvalidChannelLinkException("Channel identifier cannot be null or empty");
         }
 
-        if (raw.startsWith("@") || raw.startsWith("-100")) {
-            return raw;
+        if (link.startsWith("@") || link.startsWith("-100")) {
+            return link;
         }
 
-        if (raw.startsWith("https://t.me/")) {
-            return "@" + raw.substring("https://t.me/".length());
+        if (link.startsWith("https://t.me/")) {
+            String username = link.substring("https://t.me/".length());
+            if (username.isEmpty()) {
+                throw new InvalidChannelLinkException("No username found in Telegram link");
+            }
+            return "@" + username;
         }
-        return "@" + raw;
+
+        throw new InvalidChannelLinkException("Invalid Telegram link format");
     }
-
 }

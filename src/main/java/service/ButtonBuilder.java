@@ -2,6 +2,8 @@ package service;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 
 public class ButtonBuilder {
     private final TelegramLongPollingBot bot;
@@ -56,48 +59,65 @@ public class ButtonBuilder {
         return markup;
     }
 
+
     @SneakyThrows
-    public ReplyKeyboard paginationButtons(String[][] buttons, String[][] data, int currentPage) {
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+    public void paginationButton(Long chatId, ArrayList<String> messagePerPage, ArrayList<String> data, int currentPage, Integer messageId) {
+        int maxPage = (int) Math.ceil((double) data.size() / 10);
+        String messageText = messagePerPage.get(currentPage - 1);
+
+        InlineKeyboardMarkup markup = getPaginationWithDataButtons(currentPage, maxPage, data);
+
+        if (messageId == null) {
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(chatId);
+            sendMessage.setText(messageText);
+            sendMessage.setReplyMarkup(markup);
+            bot.execute(sendMessage);
+        } else {
+            EditMessageText editMessage = new EditMessageText();
+            editMessage.setChatId(chatId);
+            editMessage.setMessageId(messageId);
+            editMessage.setText(messageText);
+            editMessage.setReplyMarkup(markup);
+            bot.execute(editMessage);
+        }
+    }
+
+    @SneakyThrows
+    private InlineKeyboardMarkup getPaginationWithDataButtons(int currentPage, int maxPage, ArrayList<String> data) {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
 
         int itemsPerPage = 10;
-        int totalItems = Math.min(data.length, 10);
-        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
-        currentPage = Math.max(1, Math.min(currentPage, totalPages));
-
         int startIndex = (currentPage - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+        int endIndex = Math.min(startIndex + itemsPerPage, data.size());
 
+        List<InlineKeyboardButton> row = new ArrayList<>();
         for (int i = startIndex; i < endIndex; i++) {
-            List<InlineKeyboardButton> row = new ArrayList<>();
-            InlineKeyboardButton button = new InlineKeyboardButton();
-            int buttonNumber = i + 1;
-            button.setText(String.valueOf(buttonNumber));
-            button.setCallbackData(data[i][1]);
-            row.add(button);
-            keyboard.add(row);
+            int buttonNumber = (i % 10) + 1;
+            row.add(InlineKeyboardButton.builder()
+                    .text(String.valueOf(buttonNumber))
+                    .callbackData(data.get(i))
+                    .build());
+
+            if (row.size() == 5) {
+                keyboard.add(new ArrayList<>(row));
+                row.clear();
+            }
         }
 
-        List<InlineKeyboardButton> navigationRow = new ArrayList<>();
-        if (currentPage > 1) {
-            InlineKeyboardButton prevButton = new InlineKeyboardButton();
-            prevButton.setText("⬅️ Previous");
-            prevButton.setCallbackData("page_" + (currentPage - 1));
-            navigationRow.add(prevButton);
-        }
-        if (currentPage < totalPages) {
-            InlineKeyboardButton nextButton = new InlineKeyboardButton();
-            nextButton.setText("Next ➡️");
-            nextButton.setCallbackData("page_" + (currentPage + 1));
-            navigationRow.add(nextButton);
+        if (!row.isEmpty()) {
+            keyboard.add(new ArrayList<>(row));
         }
 
-        if (!navigationRow.isEmpty()) {
-            keyboard.add(navigationRow);
-        }
+        List<InlineKeyboardButton> navigationButtons = new ArrayList<>();
 
-        markup.setKeyboard(keyboard);
-        return markup;
+        int prevPage = (currentPage > 1) ? currentPage - 1 : currentPage;
+        int nextPage = (currentPage < maxPage) ? currentPage + 1 : currentPage;
+
+        navigationButtons.add(InlineKeyboardButton.builder().text("⬅️").callbackData("page:" + prevPage).build());
+        navigationButtons.add(InlineKeyboardButton.builder().text("➡️").callbackData("page:" + nextPage).build());
+        keyboard.add(navigationButtons);
+
+        return InlineKeyboardMarkup.builder().keyboard(keyboard).build();
     }
 }
