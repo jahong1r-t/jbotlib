@@ -1,46 +1,46 @@
 package service;
 
-import exceptions.InvalidChannelLinkException;
+import exceptions.BotNotAdminException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.DeleteChatPhoto;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import utils.Resolvers;
 
 @Slf4j
 public class ChatContentService {
     private final TelegramLongPollingBot bot;
+    private final PermissionManager permissionManager;
 
     public ChatContentService(TelegramLongPollingBot bot) {
         this.bot = bot;
+        this.permissionManager = new PermissionManager(bot);
     }
 
     @SneakyThrows
     public void changeChatPhoto(String chatUsername, InputFile photo) {
-        if (chatUsername.startsWith("@") || chatUsername.matches("https?://t.me/.+")) {
+        if (permissionManager.isBotAdmin(chatUsername)) {
             bot.execute(SetChatPhoto.builder()
-                    .chatId(chatUsername.startsWith("@") ? chatUsername : "@" + chatUsername.substring("https://t.me/".length()))
+                    .chatId(Resolvers.linkResolver(chatUsername))
                     .photo(photo)
                     .build());
             log.info("Chat photo updated: {}", chatUsername);
         } else {
-            log.warn("Chat photo not changed: {}", chatUsername);
-            throw new InvalidChannelLinkException("Invalid channel link: " + chatUsername);
+            throw new BotNotAdminException("Bot is not admin of this channel: " + chatUsername);
         }
     }
 
     @SneakyThrows
     public void deleteChatPhoto(String chatUsername) {
-        if (chatUsername.startsWith("@") || chatUsername.matches("https?://t.me/.+")) {
+        if (permissionManager.isBotAdmin(chatUsername)) {
             bot.execute(DeleteChatPhoto.builder()
-                    .chatId(chatUsername.startsWith("@") ? chatUsername : "@" + chatUsername.substring("https://t.me/".length()))
+                    .chatId(Resolvers.linkResolver(chatUsername))
                     .build());
-
             log.info("Chat photo deleted: {}", chatUsername);
         } else {
-            log.warn("Chat photo not deleted: {}", chatUsername);
-            throw new InvalidChannelLinkException("Invalid channel link: " + chatUsername);
+            throw new BotNotAdminException("Bot is not admin of this channel: " + chatUsername);
         }
     }
 }
