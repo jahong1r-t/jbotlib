@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
@@ -16,30 +17,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * A utility class for creating buttons and keyboards for Telegram bots.
- * This class facilitates the creation of standard keyboards, inline keyboards, and pagination buttons.
- */
-public class ButtonBuilder {
+public class KeyboardBuilder {
     private final TelegramLongPollingBot bot;
 
-    /**
-     * Constructor for ButtonBuilder.
-     *
-     * @param bot The TelegramLongPollingBot instance used to send messages with buttons.
-     */
-    public ButtonBuilder(TelegramLongPollingBot bot) {
+    @SneakyThrows
+    public KeyboardBuilder(TelegramLongPollingBot bot) {
         this.bot = bot;
     }
 
-    /**
-     * Creates a standard keyboard (ReplyKeyboardMarkup).
-     * Buttons are provided as a 2D array, where each row is added as a separate KeyboardRow.
-     *
-     * @param buttons A 2D array containing the text for the buttons.
-     * @return A ReplyKeyboardMarkup object representing the created keyboard.
-     * @throws Exception If an error occurs while creating the keyboard.
-     */
     @SneakyThrows
     public ReplyKeyboard keyboard(String[][] buttons) {
         List<KeyboardRow> rows = Arrays.stream(buttons)
@@ -56,15 +41,6 @@ public class ButtonBuilder {
                 .build();
     }
 
-    /**
-     * Creates an inline keyboard (InlineKeyboardMarkup).
-     * Button texts and callback data are provided in separate 2D arrays.
-     *
-     * @param buttons A 2D array containing the text for the buttons.
-     * @param data A 2D array containing the callback data for the buttons.
-     * @return An InlineKeyboardMarkup object representing the created inline keyboard.
-     * @throws Exception If an error occurs while creating the inline keyboard.
-     */
     @SneakyThrows
     public ReplyKeyboard inlineKeyboard(String[][] buttons, String[][] data) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
@@ -84,23 +60,49 @@ public class ButtonBuilder {
         return markup;
     }
 
-    /**
-     * Sends a message with pagination buttons or edits an existing message.
-     * Each page displays a list of data items along with navigation buttons.
-     *
-     * @param chatId The chat ID where the message will be sent or edited.
-     * @param messagePerPage A list of message texts for each page.
-     * @param data A list of callback data for the buttons.
-     * @param currentPage The current page number (starting from 1).
-     * @param messageId If null, a new message is sent; otherwise, an existing message is edited.
-     * @throws Exception If an error occurs while sending or editing the message.
-     */
     @SneakyThrows
-    public void paginationButton(Long chatId, ArrayList<String> messagePerPage, ArrayList<String> data, int currentPage, Integer messageId) {
+    public ReplyKeyboard inlineUrlButton(String text, String url) {
+        InlineKeyboardButton button = InlineKeyboardButton.builder()
+                .text(text)
+                .url(url)
+                .build();
+        return InlineKeyboardMarkup.builder()
+                .keyboard(List.of(List.of(button)))
+                .build();
+    }
+
+    @SneakyThrows
+    public ReplyKeyboard phoneNumberButton(String buttonText) {
+        KeyboardButton contactButton = KeyboardButton.builder()
+                .text(buttonText)
+                .requestContact(true)
+                .build();
+
+        return ReplyKeyboardMarkup.builder()
+                .resizeKeyboard(true)
+                .keyboardRow(new KeyboardRow(List.of(contactButton)))
+                .build();
+    }
+
+    @SneakyThrows
+    public ReplyKeyboard locationButton(String buttonText) {
+        KeyboardButton contactButton = KeyboardButton.builder()
+                .text(buttonText)
+                .requestContact(true)
+                .build();
+
+        return ReplyKeyboardMarkup.builder()
+                .resizeKeyboard(true)
+                .keyboardRow(new KeyboardRow(List.of(contactButton)))
+                .build();
+    }
+
+    @SneakyThrows
+    public void sendPaginationKeyboard(Long chatId, ArrayList<String> messagePerPage, ArrayList<String> data, int currentPage, Integer messageId) {
         int maxPage = (int) Math.ceil((double) data.size() / 10);
         String messageText = messagePerPage.get(currentPage - 1);
 
-        InlineKeyboardMarkup markup = getPaginationWithDataButtons(currentPage, maxPage, data);
+        InlineKeyboardMarkup markup = buildPaginationKeyboard(currentPage, maxPage, data);
 
         if (messageId == null) {
             SendMessage sendMessage = new SendMessage();
@@ -118,18 +120,8 @@ public class ButtonBuilder {
         }
     }
 
-    /**
-     * Creates an InlineKeyboardMarkup with pagination buttons and data buttons.
-     * Displays up to 10 items per page, along with navigation buttons.
-     *
-     * @param currentPage The current page number.
-     * @param maxPage The total number of pages.
-     * @param data A list of callback data for the buttons.
-     * @return An InlineKeyboardMarkup object representing the pagination keyboard.
-     * @throws Exception If an error occurs while creating the keyboard.
-     */
     @SneakyThrows
-    private InlineKeyboardMarkup getPaginationWithDataButtons(int currentPage, int maxPage, ArrayList<String> data) {
+    private InlineKeyboardMarkup buildPaginationKeyboard(int currentPage, int maxPage, ArrayList<String> data) {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
 
         int itemsPerPage = 10;
