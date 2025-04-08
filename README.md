@@ -26,9 +26,9 @@ JBotLib is a lightweight and powerful Java library designed to simplify Telegram
 
 ```xml
 <dependency>
-    <groupId>com.example</groupId>
-    <artifactId>jbotlib</artifactId>
-    <version>1.0.0</version>
+  <groupId>io.github.jahong1r-t</groupId>
+  <artifactId>jbotlib</artifactId>
+  <version>1.0.1</version>
 </dependency>
 ```
 
