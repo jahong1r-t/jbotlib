@@ -49,15 +49,9 @@ public class MessageService {
     /**
      * Sends a text message to a specified chat.
      *
-     * @param chatId The ID of the chat where the message will be sent.
+     * @param chatId  The ID of the chat where the message will be sent.
      * @param message The text content of the message (supports MarkdownV2 formatting).
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * messageService.sendMessage(123456L, "Hello, *world*!"); // Sends a bold "world" in the message
-     * </pre>
+     *                If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendMessage(Long chatId, String message) {
@@ -71,17 +65,10 @@ public class MessageService {
     /**
      * Sends a text message to a specified chat with a custom reply keyboard.
      *
-     * @param chatId The ID of the chat where the message will be sent.
-     * @param message The text content of the message (supports MarkdownV2 formatting).
+     * @param chatId        The ID of the chat where the message will be sent.
+     * @param message       The text content of the message (supports MarkdownV2 formatting).
      * @param replyKeyboard The custom reply keyboard to attach to the message.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * ReplyKeyboard keyboard = new ReplyKeyboardMarkup(List.of(List.of(new KeyboardButton("Option 1"))));
-     * messageService.sendMessage(123456L, "Choose an option:", keyboard);
-     * </pre>
+     *                      If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendMessage(Long chatId, String message, ReplyKeyboard replyKeyboard) {
@@ -96,17 +83,10 @@ public class MessageService {
     /**
      * Sends a photo to a specified chat with a caption.
      *
-     * @param chatId The ID of the chat where the photo will be sent.
+     * @param chatId  The ID of the chat where the photo will be sent.
      * @param caption The caption for the photo (supports MarkdownV2 formatting).
-     * @param photo The InputFile containing the photo to send.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile photo = new InputFile(new File("path/to/photo.jpg"));
-     * messageService.sendPhoto(123456L, "Check out this *photo*!", photo);
-     * </pre>
+     * @param photo   The InputFile containing the photo to send.
+     *                If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendPhoto(Long chatId, String caption, InputFile photo) {
@@ -121,19 +101,11 @@ public class MessageService {
     /**
      * Sends a photo to a specified chat with a caption and a custom reply keyboard.
      *
-     * @param chatId The ID of the chat where the photo will be sent.
-     * @param caption The caption for the photo (supports MarkdownV2 formatting).
-     * @param photo The InputFile containing the photo to send.
+     * @param chatId        The ID of the chat where the photo will be sent.
+     * @param caption       The caption for the photo (supports MarkdownV2 formatting).
+     * @param photo         The InputFile containing the photo to send.
      * @param replyKeyboard The custom reply keyboard to attach to the message.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile photo = new InputFile(new File("path/to/photo.jpg"));
-     * ReplyKeyboard keyboard = new ReplyKeyboardMarkup(List.of(List.of(new KeyboardButton("Like"))));
-     * messageService.sendPhoto(123456L, "Check out this *photo*!", photo, keyboard);
-     * </pre>
+     *                      If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendPhoto(Long chatId, String caption, InputFile photo, ReplyKeyboard replyKeyboard) {
@@ -149,17 +121,10 @@ public class MessageService {
     /**
      * Sends a document to a specified chat with a caption.
      *
-     * @param chatId The ID of the chat where the document will be sent.
-     * @param caption The caption for the document (supports MarkdownV2 formatting).
+     * @param chatId   The ID of the chat where the document will be sent.
+     * @param caption  The caption for the document (supports MarkdownV2 formatting).
      * @param document The InputFile containing the document to send.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile document = new InputFile(new File("path/to/document.pdf"));
-     * messageService.sendDocument(123456L, "Here is the *document*!", document);
-     * </pre>
+     *                 If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendDocument(Long chatId, String caption, InputFile document) {
@@ -174,19 +139,11 @@ public class MessageService {
     /**
      * Sends a document to a specified chat with a caption and a custom reply keyboard.
      *
-     * @param chatId The ID of the chat where the document will be sent.
-     * @param caption The caption for the document (supports MarkdownV2 formatting).
-     * @param document The InputFile containing the document to send.
+     * @param chatId        The ID of the chat where the document will be sent.
+     * @param caption       The caption for the document (supports MarkdownV2 formatting).
+     * @param document      The InputFile containing the document to send.
      * @param replyKeyboard The custom reply keyboard to attach to the message.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile document = new InputFile(new File("path/to/document.pdf"));
-     * ReplyKeyboard keyboard = new ReplyKeyboardMarkup(List.of(List.of(new KeyboardButton("Download"))));
-     * messageService.sendDocument(123456L, "Here is the *document*!", document, keyboard);
-     * </pre>
+     *                      If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendDocument(Long chatId, String caption, InputFile document, ReplyKeyboard replyKeyboard) {
@@ -202,17 +159,10 @@ public class MessageService {
     /**
      * Sends a video to a specified chat with a caption.
      *
-     * @param chatId The ID of the chat where the video will be sent.
+     * @param chatId  The ID of the chat where the video will be sent.
      * @param caption The caption for the video (supports MarkdownV2 formatting).
-     * @param video The InputFile containing the video to send.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile video = new InputFile(new File("path/to/video.mp4"));
-     * messageService.sendVideo(123456L, "Watch this *video*!", video);
-     * </pre>
+     * @param video   The InputFile containing the video to send.
+     *                If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendVideo(Long chatId, String caption, InputFile video) {
@@ -227,19 +177,11 @@ public class MessageService {
     /**
      * Sends a video to a specified chat with a caption and a custom reply keyboard.
      *
-     * @param chatId The ID of the chat where the video will be sent.
-     * @param caption The caption for the video (supports MarkdownV2 formatting).
-     * @param video The InputFile containing the video to send.
+     * @param chatId        The ID of the chat where the video will be sent.
+     * @param caption       The caption for the video (supports MarkdownV2 formatting).
+     * @param video         The InputFile containing the video to send.
      * @param replyKeyboard The custom reply keyboard to attach to the message.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile video = new InputFile(new File("path/to/video.mp4"));
-     * ReplyKeyboard keyboard = new ReplyKeyboardMarkup(List.of(List.of(new KeyboardButton("Share"))));
-     * messageService.sendVideo(123456L, "Watch this *video*!", video, keyboard);
-     * </pre>
+     *                      If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendVideo(Long chatId, String caption, InputFile video, ReplyKeyboard replyKeyboard) {
@@ -255,17 +197,10 @@ public class MessageService {
     /**
      * Sends a poll to a specified chat with a question and options.
      *
-     * @param chatId The ID of the chat where the poll will be sent.
+     * @param chatId   The ID of the chat where the poll will be sent.
      * @param question The question for the poll.
-     * @param options The list of options for the poll (at least 2 options required).
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * List<String> options = List.of("Yes", "No");
-     * messageService.sendPoll(123456L, "Do you like this bot?", options);
-     * </pre>
+     * @param options  The list of options for the poll (at least 2 options required).
+     *                 If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendPoll(Long chatId, String question, List<String> options) {
@@ -279,18 +214,11 @@ public class MessageService {
     /**
      * Sends a poll to a specified chat with a question, options, and multiple answer support.
      *
-     * @param chatId The ID of the chat where the poll will be sent.
-     * @param question The question for the poll.
-     * @param options The list of options for the poll (at least 2 options required).
+     * @param chatId               The ID of the chat where the poll will be sent.
+     * @param question             The question for the poll.
+     * @param options              The list of options for the poll (at least 2 options required).
      * @param allowMultipleAnswers Whether users can select multiple answers.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * List<String> options = List.of("Option 1", "Option 2", "Option 3");
-     * messageService.sendPoll(123456L, "Choose your favorites:", options, true);
-     * </pre>
+     *                             If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendPoll(Long chatId, String question, List<String> options, boolean allowMultipleAnswers) {
@@ -305,18 +233,11 @@ public class MessageService {
     /**
      * Sends a poll to a specified chat with a question, options, and an explanation for the correct answer.
      *
-     * @param chatId The ID of the chat where the poll will be sent.
-     * @param question The question for the poll.
-     * @param options The list of options for the poll (at least 2 options required).
+     * @param chatId      The ID of the chat where the poll will be sent.
+     * @param question    The question for the poll.
+     * @param options     The list of options for the poll (at least 2 options required).
      * @param explanation The explanation to show when the poll is answered (e.g., for quizzes).
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * List<String> options = List.of("Yes", "No");
-     * messageService.sendPoll(123456L, "Is this correct?", options, "The correct answer is Yes!");
-     * </pre>
+     *                    If the Telegram API request fails.
      */
     @SneakyThrows
     public void sendPoll(Long chatId, String question, List<String> options, String explanation) {
@@ -331,20 +252,13 @@ public class MessageService {
     /**
      * Sends a poll to a specified chat with a question, options, and a time limit for voting.
      *
-     * @param chatId The ID of the chat where the poll will be sent.
+     * @param chatId   The ID of the chat where the poll will be sent.
      * @param question The question for the poll.
-     * @param options The list of options for the poll (at least 2 options required).
-     * @param time The duration for which the poll will be open.
+     * @param options  The list of options for the poll (at least 2 options required).
+     * @param time     The duration for which the poll will be open.
      * @param timeUnit The unit of time for the duration (e.g., ChronoUnit.SECONDS, ChronoUnit.MINUTES).
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * List<String> options = List.of("Yes", "No");
-     * messageService.sendPoll(123456L, "Vote now!", options, 60, ChronoUnit.SECONDS);
-     * </pre>
-     */
+     *                 If the Telegram API request fails.
+     **/
     @SneakyThrows
     public void sendPoll(Long chatId, String question, List<String> options, Integer time, ChronoUnit timeUnit) {
         Integer untilDate = (int) Instant.now().plus(time, timeUnit).getEpochSecond();
@@ -361,20 +275,10 @@ public class MessageService {
      * Sends a media group (e.g., multiple photos or videos) to a specified chat with a caption.
      * The caption is applied to the first media item in the group.
      *
-     * @param chatId The ID of the chat where the media group will be sent.
-     * @param caption The caption for the media group (applied to the first item).
+     * @param chatId     The ID of the chat where the media group will be sent.
+     * @param caption    The caption for the media group (applied to the first item).
      * @param mediaGroup The list of InputMedia objects (e.g., photos, videos) to send.
-     * @throws Exception If the Telegram API request fails or the media group is empty.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * List<InputMedia> mediaGroup = List.of(
-     *     new InputMediaPhoto("photo1_id"),
-     *     new InputMediaPhoto("photo2_id")
-     * );
-     * messageService.sendMediaGroup(123456L, "Check out these photos!", mediaGroup);
-     * </pre>
+     *                   If the Telegram API request fails or the media group is empty.
      */
     @SneakyThrows
     public void sendMediaGroup(Long chatId, String caption, List<InputMedia> mediaGroup) {
@@ -390,15 +294,9 @@ public class MessageService {
     /**
      * Deletes a message from a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
+     * @param chatId    The ID of the chat where the message is located.
      * @param messageId The ID of the message to delete.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * messageService.deleteMessage(123456L, 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void deleteMessage(Long chatId, Integer messageId) {
@@ -411,16 +309,10 @@ public class MessageService {
     /**
      * Edits the text of an existing message in a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
-     * @param message The new text content of the message (supports MarkdownV2 formatting).
+     * @param chatId    The ID of the chat where the message is located.
+     * @param message   The new text content of the message (supports MarkdownV2 formatting).
      * @param messageId The ID of the message to edit.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * messageService.editMessage(123456L, "Updated *text*!", 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void editMessage(Long chatId, String message, Integer messageId) {
@@ -435,16 +327,10 @@ public class MessageService {
     /**
      * Edits the caption of an existing media message in a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
-     * @param caption The new caption for the media message.
+     * @param chatId    The ID of the chat where the message is located.
+     * @param caption   The new caption for the media message.
      * @param messageId The ID of the message to edit.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * messageService.editMessageCaption(123456L, "Updated caption!", 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void editMessageCaption(Long chatId, String caption, Integer messageId) {
@@ -458,17 +344,10 @@ public class MessageService {
     /**
      * Edits the photo of an existing media message in a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
-     * @param media The new InputFile containing the photo to replace the existing media.
+     * @param chatId    The ID of the chat where the message is located.
+     * @param media     The new InputFile containing the photo to replace the existing media.
      * @param messageId The ID of the message to edit.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile newPhoto = new InputFile(new File("path/to/new_photo.jpg"));
-     * messageService.editMessagePhoto(123456L, newPhoto, 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void editMessagePhoto(Long chatId, InputFile media, Integer messageId) {
@@ -482,17 +361,10 @@ public class MessageService {
     /**
      * Edits the video of an existing media message in a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
-     * @param media The new InputFile containing the video to replace the existing media.
+     * @param chatId    The ID of the chat where the message is located.
+     * @param media     The new InputFile containing the video to replace the existing media.
      * @param messageId The ID of the message to edit.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile newVideo = new InputFile(new File("path/to/new_video.mp4"));
-     * messageService.editMessageVideo(123456L, newVideo, 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void editMessageVideo(Long chatId, InputFile media, Integer messageId) {
@@ -506,17 +378,10 @@ public class MessageService {
     /**
      * Edits the document of an existing media message in a specified chat.
      *
-     * @param chatId The ID of the chat where the message is located.
-     * @param media The new InputFile containing the document to replace the existing media.
+     * @param chatId    The ID of the chat where the message is located.
+     * @param media     The new InputFile containing the document to replace the existing media.
      * @param messageId The ID of the message to edit.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * MessageService messageService = new MessageService(bot);
-     * InputFile newDocument = new InputFile(new File("path/to/new_document.pdf"));
-     * messageService.editMessageDocument(123456L, newDocument, 789);
-     * </pre>
+     *                  If the Telegram API request fails.
      */
     @SneakyThrows
     public void editMessageDocument(Long chatId, InputFile media, Integer messageId) {

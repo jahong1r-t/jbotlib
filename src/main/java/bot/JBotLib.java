@@ -4,7 +4,10 @@ import lombok.Getter;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import service.*;
 
-
+/**
+ * Abstract base class for creating Telegram bots using the JBotLib library.
+ * Extends TelegramLongPollingBot to provide additional functionality for bot development.
+ */
 @Getter
 public abstract class JBotLib extends TelegramLongPollingBot {
     private final AnnotationService annotationService;

@@ -37,7 +37,6 @@ public class KeyboardBuilder {
      * Constructs a new KeyboardBuilder instance.
      *
      * @param bot The TelegramLongPollingBot instance used to execute API requests.
-     * @throws Exception If the Telegram API initialization fails.
      */
     @SneakyThrows
     public KeyboardBuilder(TelegramLongPollingBot bot) {
@@ -50,15 +49,6 @@ public class KeyboardBuilder {
      *
      * @param buttons A 2D array of strings representing the button labels, where each inner array represents a row.
      * @return A ReplyKeyboardMarkup object representing the reply keyboard.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * String[][] buttons = {{"Option 1", "Option 2"}, {"Option 3"}};
-     * ReplyKeyboard keyboard = keyboardBuilder.keyboard(buttons);
-     * // Use the keyboard with a message
-     * </pre>
      */
     @SneakyThrows
     public ReplyKeyboard keyboard(String[][] buttons) {
@@ -81,18 +71,8 @@ public class KeyboardBuilder {
      * Each button is associated with a callback data string for handling user interactions.
      *
      * @param buttons A 2D array of strings representing the button labels.
-     * @param data A 2D array of strings representing the callback data for each button.
+     * @param data    A 2D array of strings representing the callback data for each button.
      * @return An InlineKeyboardMarkup object representing the inline keyboard.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * String[][] buttons = {{"Yes", "No"}, {"Maybe"}};
-     * String[][] data = {{"yes_data", "no_data"}, {"maybe_data"}};
-     * ReplyKeyboard inlineKeyboard = keyboardBuilder.inlineKeyboard(buttons, data);
-     * // Use the inline keyboard with a message
-     * </pre>
      */
     @SneakyThrows
     public ReplyKeyboard inlineKeyboard(String[][] buttons, String[][] data) {
@@ -117,16 +97,8 @@ public class KeyboardBuilder {
      * Creates an inline URL button that redirects the user to a specified URL when clicked.
      *
      * @param text The label of the button.
-     * @param url The URL to redirect the user to when the button is clicked.
+     * @param url  The URL to redirect the user to when the button is clicked.
      * @return An InlineKeyboardMarkup object containing a single URL button.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * ReplyKeyboard urlButton = keyboardBuilder.inlineUrlButton("Visit Website", "https://example.com");
-     * // Use the URL button with a message
-     * </pre>
      */
     @SneakyThrows
     public ReplyKeyboard inlineUrlButton(String text, String url) {
@@ -144,14 +116,6 @@ public class KeyboardBuilder {
      *
      * @param buttonText The label of the button.
      * @return A ReplyKeyboardMarkup object containing a single button to request the user's phone number.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * ReplyKeyboard phoneButton = keyboardBuilder.phoneNumberButton("Share Phone Number");
-     * // Use the phone number button with a message
-     * </pre>
      */
     @SneakyThrows
     public ReplyKeyboard phoneNumberButton(String buttonText) {
@@ -173,14 +137,6 @@ public class KeyboardBuilder {
      *
      * @param buttonText The label of the button.
      * @return A ReplyKeyboardMarkup object containing a single button to request the user's location.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * ReplyKeyboard locationButton = keyboardBuilder.locationButton("Share Location");
-     * // Use the location button with a message
-     * </pre>
      */
     @SneakyThrows
     public ReplyKeyboard locationButton(String buttonText) {
@@ -200,20 +156,11 @@ public class KeyboardBuilder {
      * The pagination keyboard includes numbered buttons for selecting items and navigation buttons
      * for moving between pages.
      *
-     * @param chatId The ID of the chat where the message will be sent or edited.
+     * @param chatId         The ID of the chat where the message will be sent or edited.
      * @param messagePerPage A list of messages to display for each page.
-     * @param data A list of callback data associated with each item in the pagination.
-     * @param currentPage The current page number (1-based indexing).
-     * @param messageId The ID of the message to edit; if null, a new message is sent.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * KeyboardBuilder keyboardBuilder = new KeyboardBuilder(bot);
-     * ArrayList<String> messages = new ArrayList<>(List.of("Page 1 content", "Page 2 content"));
-     * ArrayList<String> data = new ArrayList<>(List.of("item1", "item2", "item3"));
-     * keyboardBuilder.sendPaginationKeyboard(123456L, messages, data, 1, null);
-     * </pre>
+     * @param data           A list of callback data associated with each item in the pagination.
+     * @param currentPage    The current page number (1-based indexing).
+     * @param messageId      The ID of the message to edit; if null, a new message is sent.
      */
     @SneakyThrows
     public void sendPaginationKeyboard(Long chatId, ArrayList<String> messagePerPage, ArrayList<String> data, int currentPage, Integer messageId) {
@@ -244,16 +191,9 @@ public class KeyboardBuilder {
      * "Previous" and "Next" buttons for navigation.
      *
      * @param currentPage The current page number (1-based indexing).
-     * @param maxPage The total number of pages.
-     * @param data The list of callback data for the items.
+     * @param maxPage     The total number of pages.
+     * @param data        The list of callback data for the items.
      * @return An InlineKeyboardMarkup object representing the pagination keyboard.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * // This method is private and called internally by sendPaginationKeyboard.
-     * // See sendPaginationKeyboard for usage.
-     * </pre>
      */
     @SneakyThrows
     private InlineKeyboardMarkup buildPaginationKeyboard(int currentPage, int maxPage, ArrayList<String> data) {
