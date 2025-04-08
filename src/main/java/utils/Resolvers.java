@@ -3,7 +3,17 @@ package utils;
 import exceptions.InvalidChannelLinkException;
 import lombok.SneakyThrows;
 
+/**
+ * Utility class for resolving and validating links.
+ */
 public class Resolvers {
+
+    /**
+     * Resolves a given link and returns a formatted or validated version of it.
+     *
+     * @param link the link to resolve
+     * @return the resolved link
+     */
     @SneakyThrows
     public static String linkResolver(String link) {
         if (link == null || link.isBlank()) {

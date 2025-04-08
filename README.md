@@ -49,7 +49,8 @@ Create a new class that extends `JBotLib` and implement the required methods:
 ```java
 package bot;
 
-import bot.JBotLib;
+import 
+        bot.JBotLib;
 import bot.annotations.AdminOnly;
 import bot.annotations.AutoReply;
 import bot.annotations.BotCommand;

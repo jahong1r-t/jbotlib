@@ -44,11 +44,11 @@ public class AnnotationService {
     /**
      * Constructs a new AnnotationService instance.
      *
-     * @param bot The JBotLib instance containing the annotated methods.
-     * @param messageService The MessageService instance for sending messages.
+     * @param bot             The JBotLib instance containing the annotated methods.
+     * @param messageService  The MessageService instance for sending messages.
      * @param keyboardBuilder The KeyboardBuilder instance for creating keyboards.
-     * @param chatService The ChatService instance for managing chat operations.
-     * @param eventLogger The EventLogger instance for logging events.
+     * @param chatService     The ChatService instance for managing chat operations.
+     * @param eventLogger     The EventLogger instance for logging events.
      */
     public AnnotationService(JBotLib bot, MessageService messageService, KeyboardBuilder keyboardBuilder,
                              ChatService chatService, EventLogger eventLogger) {
@@ -67,13 +67,13 @@ public class AnnotationService {
      * Handles {@link BotCommand} and {@link AutoReply} annotations based on the message text.
      *
      * @param update The Telegram update to process.
-     *
-     * @example
-     * <pre>
-     * AnnotationService annotationService = new AnnotationService(bot, messageService, keyboardBuilder, chatService, eventLogger);
-     * Update update = // Received Telegram update
-     * annotationService.processUpdate(update);
-     * </pre>
+     *               <p>
+     *               Example:
+     *               <pre>
+     *                                                                       AnnotationService annotationService = new AnnotationService(bot, messageService, keyboardBuilder, chatService, eventLogger);
+     *                                                                       Update update = // Received Telegram update
+     *                                                                       annotationService.processUpdate(update);
+     *                                                                       </pre>
      */
     public void processUpdate(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -99,8 +99,8 @@ public class AnnotationService {
     /**
      * Registers methods annotated with {@link BotCommand} and {@link AutoReply}.
      * Scans the bot's declared methods and maps them to their respective triggers.
-     *
-     * @example
+     * <p>
+     * Example:
      * <pre>
      * // This method is called automatically during construction.
      * // See the constructor for usage.
@@ -122,8 +122,8 @@ public class AnnotationService {
     /**
      * Schedules tasks annotated with {@link ScheduledTask}.
      * Executes the annotated methods at fixed intervals in all active chats.
-     *
-     * @example
+     * <p>
+     * Example:
      * <pre>
      * // This method is called automatically during construction.
      * // See the constructor for usage.
@@ -153,13 +153,12 @@ public class AnnotationService {
      * @param method The method to invoke.
      * @param chatId The ID of the chat where the method is invoked.
      * @param userId The ID of the user who triggered the method (can be null for scheduled tasks).
-     * @throws Exception If the method invocation fails or the user lacks admin privileges for an {@link AdminOnly} method.
-     *
-     * @example
-     * <pre>
-     * // This method is private and called internally by processUpdate and scheduleTasks.
-     * // See processUpdate for usage.
-     * </pre>
+     *               <p>
+     *               Example:
+     *               <pre>
+     *                                                                       // This method is private and called internally by processUpdate and scheduleTasks.
+     *                                                                       // See processUpdate for usage.
+     *                                                                       </pre>
      */
     @SneakyThrows
     private void invokeMethod(Method method, Long chatId, Long userId) {

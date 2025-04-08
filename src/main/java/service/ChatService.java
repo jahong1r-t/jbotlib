@@ -50,14 +50,6 @@ public class ChatService {
      *
      * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @return {@code true} if the bot is an admin (Administrator or Owner), {@code false} otherwise.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * boolean isAdmin = chatService.isBotAdmin("123456");
-     * System.out.println("Bot is admin: " + isAdmin);
-     * </pre>
      */
     @SneakyThrows
     public boolean isBotAdmin(String chat) {
@@ -78,15 +70,6 @@ public class ChatService {
      *
      * @param chats A list of chat IDs or links (resolved using {@link Resolvers#linkResolver}).
      * @return {@code true} if the bot is an admin in all chats, {@code false} if it is not an admin in at least one chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * List<String> chats = List.of("123456", "789012");
-     * boolean isAdminInAll = chatService.isBotAdmin(chats);
-     * System.out.println("Bot is admin in all chats: " + isAdminInAll);
-     * </pre>
      */
     @SneakyThrows
     public boolean isBotAdmin(List<String> chats) {
@@ -111,17 +94,9 @@ public class ChatService {
      * Checks if a user is a member of the specified chat.
      *
      * @param userId The ID of the user to check.
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat   The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @return {@code true} if the user is a member of the chat, {@code false} otherwise.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * boolean isMember = chatService.isChatMember(123456L, "789012");
-     * System.out.println("User is a member: " + isMember);
-     * </pre>
      */
     @SneakyThrows
     public boolean isChatMember(Long userId, String chat) {
@@ -141,18 +116,9 @@ public class ChatService {
      * Checks if a user is a member of at least one of the specified chats.
      *
      * @param userId The ID of the user to check.
-     * @param chats A list of chat IDs or links (resolved using {@link Resolvers#linkResolver}).
+     * @param chats  A list of chat IDs or links (resolved using {@link Resolvers#linkResolver}).
      * @return {@code true} if the user is a member of at least one chat, {@code false} otherwise.
      * @throws BotNotAdminException If the bot is not an admin in any of the specified chats.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * List<String> chats = List.of("123456", "789012");
-     * boolean isMemberInAny = chatService.isChatMember(123456L, chats);
-     * System.out.println("User is a member in at least one chat: " + isMemberInAny);
-     * </pre>
      */
     @SneakyThrows
     public boolean isChatMember(Long userId, List<String> chats) {
@@ -177,16 +143,8 @@ public class ChatService {
      * Checks if a user is an admin in the specified chat.
      *
      * @param userId The ID of the user to check.
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat   The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @return {@code true} if the user is an admin (Administrator or Owner), {@code false} otherwise.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * boolean isAdmin = chatService.isUserAdmin(123456L, "789012");
-     * System.out.println("User is admin: " + isAdmin);
-     * </pre>
      */
     @SneakyThrows
     public boolean isUserAdmin(Long userId, String chat) {
@@ -203,15 +161,8 @@ public class ChatService {
      * Restricts a chat member by revoking all permissions (effectively banning them) in the specified chat.
      *
      * @param chatId The ID of the user to restrict.
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat   The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.restrictChatMember(123456L, "789012");
-     * </pre>
      */
     @SneakyThrows
     public void restrictChatMember(Long chatId, String chat) {
@@ -226,18 +177,11 @@ public class ChatService {
     /**
      * Restricts a chat member for a specified duration by revoking all permissions (effectively banning them temporarily).
      *
-     * @param chatId The ID of the user to restrict.
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
-     * @param time The duration for which the user will be restricted.
+     * @param chatId   The ID of the user to restrict.
+     * @param chat     The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param time     The duration for which the user will be restricted.
      * @param timeUnit The unit of time for the duration (e.g., ChronoUnit.SECONDS, ChronoUnit.MINUTES).
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.restrictChatMember(123456L, "789012", 3600, ChronoUnit.SECONDS); // Ban for 1 hour
-     * </pre>
      */
     @SneakyThrows
     public void restrictChatMember(Long chatId, String chat, Integer time, ChronoUnit timeUnit) {
@@ -255,15 +199,8 @@ public class ChatService {
      * Unrestricts a chat member, lifting any previous restrictions (effectively unbanning them).
      *
      * @param chatId The ID of the user to unrestrict.
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat   The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.unrestrictChatMember(123456L, "789012");
-     * </pre>
      */
     @SneakyThrows
     public void unrestrictChatMember(Long chatId, String chat) {
@@ -277,17 +214,9 @@ public class ChatService {
     /**
      * Sets a new photo for the specified chat.
      *
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat  The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @param photo The InputFile containing the new photo to set.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * InputFile photo = new InputFile(new File("path/to/photo.jpg"));
-     * chatService.setChatPhoto("123456", photo);
-     * </pre>
      */
     @SneakyThrows
     public void setChatPhoto(String chat, InputFile photo) {
@@ -307,13 +236,6 @@ public class ChatService {
      *
      * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.deleteChatPhoto("123456");
-     * </pre>
      */
     @SneakyThrows
     public void deleteChatPhoto(String chat) {
@@ -330,16 +252,9 @@ public class ChatService {
     /**
      * Sets a new title for the specified chat.
      *
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat  The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @param title The new title for the chat.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.setChatTitle("123456", "New Chat Title");
-     * </pre>
      */
     @SneakyThrows
     public void setChatTitle(String chat, String title) {
@@ -354,16 +269,9 @@ public class ChatService {
     /**
      * Sets a new description for the specified chat.
      *
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat        The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @param description The new description for the chat.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.setChatDescription("123456", "Welcome to our chat!");
-     * </pre>
      */
     @SneakyThrows
     public void setChatDescription(String chat, String description) {
@@ -377,16 +285,9 @@ public class ChatService {
     /**
      * Pins a message in the specified chat.
      *
-     * @param chatId The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chatId    The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @param messageId The ID of the message to pin.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.pinMessage("123456", 789);
-     * </pre>
      */
     @SneakyThrows
     public void pinMessage(String chatId, Integer messageId) {
@@ -402,16 +303,9 @@ public class ChatService {
     /**
      * Unpins a message in the specified chat.
      *
-     * @param chat The chat ID or link (resolved using {@link Resolvers#linkResolver}).
+     * @param chat      The chat ID or link (resolved using {@link Resolvers#linkResolver}).
      * @param messageId The ID of the message to unpin.
      * @throws BotNotAdminException If the bot is not an admin in the specified chat.
-     * @throws Exception If the Telegram API request fails.
-     *
-     * @example
-     * <pre>
-     * ChatService chatService = new ChatService(bot);
-     * chatService.unpinMessage("123456", 789);
-     * </pre>
      */
     @SneakyThrows
     public void unpinMessage(String chat, Integer messageId) {

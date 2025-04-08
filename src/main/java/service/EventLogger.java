@@ -41,7 +41,7 @@ public class EventLogger {
      * Constructs a new EventLogger instance with optional file logging.
      *
      * @param enableFileLogging Whether to enable logging to a file.
-     * @param logFilePath The path to the log file (required if file logging is enabled).
+     * @param logFilePath       The path to the log file (required if file logging is enabled).
      */
     public EventLogger(boolean enableFileLogging, String logFilePath) {
         this.enableFileLogging = enableFileLogging;
@@ -54,13 +54,6 @@ public class EventLogger {
      *
      * @param userId The ID of the user who performed the action.
      * @param action The description of the action.
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * eventLogger.logUserAction(123456L, "clicked_button");
-     * </pre>
      */
     @SneakyThrows
     public void logUserAction(Long userId, String action) {
@@ -72,15 +65,8 @@ public class EventLogger {
     /**
      * Logs a bot action with the specified action and details.
      *
-     * @param action The description of the bot action.
+     * @param action  The description of the bot action.
      * @param details Additional details about the action.
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * eventLogger.logBotAction("sent_message", "Message sent to chat 123456");
-     * </pre>
      */
     @SneakyThrows
     public void logBotAction(String action, String details) {
@@ -92,19 +78,8 @@ public class EventLogger {
     /**
      * Logs an error with the specified exception and context.
      *
-     * @param e The exception to log.
+     * @param e       The exception to log.
      * @param context The context in which the error occurred.
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * try {
-     *     // Some operation that throws an exception
-     * } catch (Exception e) {
-     *     eventLogger.logError(e, "message_sending");
-     * }
-     * </pre>
      */
     @SneakyThrows
     public void logError(Exception e, String context) {
@@ -118,13 +93,6 @@ public class EventLogger {
      *
      * @param message The warning message.
      * @param context The context in which the warning occurred.
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * eventLogger.logWarning("User not found", "user_lookup");
-     * </pre>
      */
     @SneakyThrows
     public void logWarning(String message, String context) {
@@ -136,16 +104,8 @@ public class EventLogger {
     /**
      * Adds contextual data to the logger, which will be included in subsequent log messages.
      *
-     * @param key The key for the context data.
+     * @param key   The key for the context data.
      * @param value The value for the context data.
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * eventLogger.addContext("chat_id", "123456");
-     * eventLogger.logUserAction(123456L, "clicked_button"); // Log will include context
-     * </pre>
      */
     @SneakyThrows
     public void addContext(String key, String value) {
@@ -154,15 +114,6 @@ public class EventLogger {
 
     /**
      * Clears all contextual data from the logger.
-     *
-     * @throws Exception If file logging is enabled and writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * EventLogger eventLogger = new EventLogger();
-     * eventLogger.addContext("chat_id", "123456");
-     * eventLogger.clearContext(); // Clears the context
-     * </pre>
      */
     @SneakyThrows
     public void clearContext() {
@@ -172,15 +123,8 @@ public class EventLogger {
     /**
      * Writes a log message to the file if file logging is enabled.
      *
-     * @param level The log level (e.g., INFO, ERROR, WARN).
+     * @param level   The log level (e.g., INFO, ERROR, WARN).
      * @param message The message to log.
-     * @throws Exception If writing to the file fails.
-     *
-     * @example
-     * <pre>
-     * // This method is private and called internally by other logging methods.
-     * // See logUserAction for usage.
-     * </pre>
      */
     @SneakyThrows
     private void writeToFileIfEnabled(String level, String message) {
@@ -200,12 +144,6 @@ public class EventLogger {
      *
      * @param e The exception whose stack trace to convert.
      * @return A string representation of the stack trace.
-     *
-     * @example
-     * <pre>
-     * // This method is private and called internally by logError.
-     * // See logError for usage.
-     * </pre>
      */
     @SneakyThrows
     private String getStackTrace(Exception e) {
